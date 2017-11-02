@@ -165,15 +165,24 @@ func uploadHandler(c *gin.Context) {
 	mkDirIfDoesntExist(rootPath(id))
 	mkDirIfDoesntExist(filesPath(id))
 
-	if len(files) == 1 && files[0].Filename == "files.tar" {
-		// TODO: Should also support zip/tar.gz?
+	//TODO: This need to be cleaned up....
+	if len(files) == 1 && (strings.HasSuffix(files[0].Filename, ".tar") || strings.HasSuffix(files[0].Filename, ".tar.gz") || strings.HasSuffix(files[0].Filename, ".zip")) {
 		// TODO: do something to ignore "._" prefixed files in osx?
 		tarBall := files[0]
-		if err := c.SaveUploadedFile(tarBall, tarballPath(id)); err != nil {
+		tarBallPath := rootPath(id) + "/" + tarBall.Filename
+		if err := c.SaveUploadedFile(tarBall, tarBallPath); err != nil {
 			c.String(http.StatusBadRequest, fmt.Sprintf("upload file err: %s", err.Error()))
 			return
 		}
-		archiver.Tar.Open(tarballPath(id), filesPath(id))
+
+		if strings.HasSuffix(files[0].Filename, ".tar") {
+			archiver.Tar.Open(tarBallPath, filesPath(id))
+		} else if strings.HasSuffix(files[0].Filename, ".tar.gz") {
+			archiver.TarGz.Open(tarBallPath, filesPath(id))
+		} else if strings.HasSuffix(files[0].Filename, ".zip") {
+			archiver.Zip.Open(tarBallPath, filesPath(id))
+		}
+
 	} else {
 		for _, file := range files {
 			if err := c.SaveUploadedFile(file, filePath(id, file.Filename)); err != nil {
