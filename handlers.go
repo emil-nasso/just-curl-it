@@ -68,16 +68,16 @@ func listHandler(c *gin.Context) {
 	}
 
 	if c.GetBool("isCurl") {
-		// TODO: Test and fix
-		// if len(files) == 1 {
-		// 	c.Redirect(http.StatusFound, downloadURL(id, c, files[0].Name()))
-		// 	return
-		// }
-		// responseString := ""
-		// for _, file := range files {
-		// 	responseString = fmt.Sprintf("%s\n%s", responseString, downloadURL(id, c, file.Name()))
-		// }
-		// c.String(http.StatusOK, "Multiple files available for download:\n%s\n", responseString)
+		//TODO: This need improvement
+		if len(files) == 1 {
+			c.Redirect(http.StatusFound, downloadURL(id, c, files[0].Name()))
+			return
+		}
+		responseString := ""
+		for _, file := range files {
+			responseString = fmt.Sprintf("%s\n%s", responseString, downloadURL(id, c, file.Name()))
+		}
+		c.String(http.StatusOK, "Multiple files available for download:\n%s\n", responseString)
 	} else {
 		filesInfo := make([]gin.H, 0)
 		var view, download, currentFilePath string
