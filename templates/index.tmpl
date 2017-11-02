@@ -3,45 +3,46 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Upload files</title>
+  <title>justcurl.it</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.css">
   <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
 </head>
 
 <body>
   <div class="ui container">
-    <form action="{{.uploadUrl}}" method="post" enctype="multipart/form-data" class="ui form">
-      <h2 class="ui dividing header">Upload files</h2>
-      <div class="ui field">
-        <label>Time to keep the files</label>
-        <div class="ui two fields">
-          <div class="field">
-            <input class="ui input" type="number" name="retention" value="24"><br>
-          </div>
-          <div class="field">
-            <select name="unit" class="ui dropdown">
-              <option value="m">minutes</option>
-              <option value="h" selected>hours</option>
-              <option value="d">days</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="ui field">
-        <label>Files</files>
-        <input class="ui input" type="file" name="files" multiple>
-      </div>
+    <h1>Have a file to share? Just curl it, brah.</h1>
+    <div class="ui blue inverted segment">
+      <p>Need a quick and simple way to move a few files?
+         Don't want to bother with installing a client or learn some complicated tool?
+         Maybe you are fifteen levels deep in an ssh chain and just need to get a log file out?
+         Look no further!
+       </p>
 
-      <button type="submit" class="ui primary button" value="submit">Upload files</button>
-    </form>
+      <p>
+        Upload single files, multiple files, whole directories using a client you already have installed, the excellent curl.
+        If your computer doesn't have curl installed, sucks to be you. You should get rid of it as it's shit (if you don't believe me,
+        look it up, it's true).</p>
+      <p>
+        Upload a .tar, .tar.gz or .zip file and it will be opened automatically on arrival.
+      </p>
+      <p>
+        You can also use the form on this page to upload a file if you feel so inclined.
+      </p>
+      <p>
+        Just let us know for how long we should keep the files and upload away!
+      </p>
+    </div>
 
+    <div class="ui horizontal divider">
+      Using curl, like a fucking boss...
+    </div>
 
     <div class="ui segments">
       <div class="ui segment">
-        <h3>Upload multiple files</h3>
+        <h3>Multiple files and/or directories</h3>
       </div>
       <div class="ui inverted segment">
-        <pre>tar -c <span style="color:red">file_directory_or_path.jpg</span> | curl -F retention=24 -F "files=@-;filename=files.tar" {{.uploadUrl}}</pre>
+        <pre>tar -cz <span style="color:red">file_directory_or_path.jpg</span> | curl -F retention=24 -F "files=@-;filename=files.tar.gz" {{.uploadUrl}}</pre>
       </div>
     </div>
 
@@ -54,10 +55,42 @@
       </div>
     </div>
 
+    <div class="ui horizontal divider">
+      ...or in the browser (not as cool).
+    </div>
+
+    <div class="ui segment">
+      <form action="{{.uploadUrl}}" method="post" enctype="multipart/form-data" class="ui form">
+        <h3 class="ui dividing header">Upload in the browser</h3>
+        <div class="ui field">
+          <label>Time to keep the files (between 1 minute and 24 hours)</label>
+          <div class="ui two fields">
+            <div class="field">
+              <input class="ui input" type="number" name="retention" value="1"><br>
+            </div>
+            <div class="field">
+              <select name="unit" class="ui dropdown">
+              <option value="m">minutes</option>
+              <option value="h" selected>hours</option>
+            </select>
+            </div>
+          </div>
+        </div>
+        <div class="ui field">
+          <label>Files</files>
+        <input class="ui input" type="file" name="files" multiple>
+      </div>
+      <button type="submit" class="ui primary button" value="submit">Upload files</button>
+    </form>
+  </div>
+  <div class="ui divider"></div>
+  <div class="ui basic segment">
+    <a href="https://github.com/emil-nasso/just-curl-it">
+      <i class="ui large github icon"></i> Source available on github
+    </a>
+  </div>
 
 
   </div>
-
 </body>
-
 </html>

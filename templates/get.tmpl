@@ -6,35 +6,35 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
 </head>
+<a href="/" class="ui button">
+	<i class="left arrow icon"></i>
+	Upload page
+</a>
 <div class="ui container">
-	<a href="/">Upload</a>
-	<h3>Files for {{ .id }}</h3>
+	<h2>Files for {{ .id }}</h2>
 
-	<p>Files will be deleted in {{ .timeLeft }}.</p>
+	<p>Files will be deleted in {{ .timeLeft }}, give or take.</p>
 
-	<a href="/zip/{{ .id }}">Download all files as a .zip archive</a>
+	<a href="/z/{{ .id }}">Download everything as .zip archive</a>
 	<table class="ui table">
 		{{ if .hasParentDir }}
-			<tr>
-				<td><i class="ui folder icon"></i></td>
-				<td><a href="{{ .parentURL }}"><i class="ui level up icon"></i></a></td>
-				<td></td>
-				<td></td>
-			</tr>
-		{{ end }}
-		{{ range .files }}
-			<tr>
-				<td class="ui collapsing">
-					{{ if .isDir }}
-						<i class="ui folder icon"></i>
-					{{ else }}
-						<i class="ui file outline icon"></i>
-					{{ end }}
-				</td>
-				<td><a href="{{ .viewURL }}">{{ .name }}</a></td>
-				<td>{{ .size }}</td>
-				<td><a href="{{ .downloadURL }}">download</a></td>
-			</tr>
+		<tr>
+			<td><i class="ui folder icon"></i></td>
+			<td><a href="{{ .parentURL }}"><i class="ui level up icon"></i></a></td>
+			<td></td>
+			<td></td>
+		</tr>
+		{{ end }} {{ range .files }}
+		<tr>
+			<td class="ui collapsing">
+				{{ if .isDir }}
+				<i class="ui folder icon"></i> {{ else }}
+				<i class="ui file outline icon"></i> {{ end }}
+			</td>
+			<td><a href="{{ .viewURL }}">{{ .name }}</a></td>
+			<td>{{ .size }}</td>
+			<td><a href="{{ .downloadURL }}">download</a></td>
+		</tr>
 		{{ end }}
 	</table>
 	<ul>
