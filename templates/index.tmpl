@@ -33,16 +33,14 @@
       </p>
     </div>
 
-    <div class="ui horizontal divider">
-      Using curl, like a fucking boss...
-    </div>
+    <h3 class="ui center aligned header">Using curl, like a fucking boss...</h3>
 
     <div class="ui segments">
       <div class="ui segment">
         <h3>Multiple files and/or directories</h3>
       </div>
       <div class="ui inverted segment">
-        <pre>tar -cz <span style="color:red">file_directory_or_path.jpg</span> | curl -F retention=24 -F "files=@-;filename=files.tar.gz" {{.uploadUrl}}</pre>
+        <code>tar -cz <span style="color:red">file_directory_or_path.jpg</span> | curl -F retention=24 -F "files=@-;filename=files.tar.gz" {{.uploadUrl}}</code>
       </div>
     </div>
 
@@ -51,13 +49,14 @@
         <h3>Upload and share the output of any command</h3>
       </div>
       <div class="ui inverted segment">
-        <pre><span style="color:red">uname -a</span> | curl -F retention=24 -F "files=@-;filename=output.log" {{.uploadUrl}}</pre>
+        <code>
+          <span style="color:red">uname -a</span> | curl -F retention=24 -F "files=@-;filename=output.log" {{.uploadUrl}}
+        </code>
+        <br>
       </div>
     </div>
 
-    <div class="ui horizontal divider">
-      ...or in the browser (not as cool).
-    </div>
+    <h3 class="ui center aligned header">...or in the browser (not as cool).</h3>
 
     <div class="ui segment">
       <form action="{{.uploadUrl}}" method="post" enctype="multipart/form-data" class="ui form">
