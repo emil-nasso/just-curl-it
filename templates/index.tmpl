@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Upload files</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
+</head>
+
+<body>
+  <div class="ui container">
+    <form action="{{.uploadUrl}}" method="post" enctype="multipart/form-data" class="ui form">
+      <h2 class="ui dividing header">Upload files</h2>
+      <div class="ui field">
+        <label>Time to keep the files</label>
+        <div class="ui two fields">
+          <div class="field">
+            <input class="ui input" type="number" name="retention" value="24"><br>
+          </div>
+          <div class="field">
+            <select name="unit" class="ui dropdown">
+              <option value="m">minutes</option>
+              <option value="h" selected>hours</option>
+              <option value="d">days</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="ui field">
+        <label>Files</files>
+        <input class="ui input" type="file" name="files" multiple>
+      </div>
+
+      <button type="submit" class="ui primary button" value="submit">Upload files</button>
+    </form>
+
+
+    <div class="ui segments">
+      <div class="ui segment">
+        <h3>Upload multiple files</h3>
+      </div>
+      <div class="ui inverted segment">
+        <pre>tar -c <span style="color:red">file_directory_or_path.jpg</span> | curl -F retention=24 -F "files=@-;filename=files.tar" {{.uploadUrl}}</pre>
+      </div>
+    </div>
+
+    <div class="ui segments">
+      <div class="ui segment">
+        <h3>Upload and share the output of any command</h3>
+      </div>
+      <div class="ui inverted segment">
+        <pre><span style="color:red">uname -a</span> | curl -F retention=24 -F "files=@-;filename=output.log" {{.uploadUrl}}</pre>
+      </div>
+    </div>
+
+
+
+  </div>
+
+</body>
+
+</html>
