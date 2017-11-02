@@ -124,10 +124,25 @@ func uploadHandler(c *gin.Context) {
 		retention = 24
 	}
 
-	if unit == "d" {
-		unit = "h"
-		retention *= 24
+	if unit == "m" {
+		if retention < 1 {
+			retention = 1
+		}
+		if retention > 1440 {
+			retention = 1440
+		}
+	} else if unit == "h" {
+		if retention < 1 {
+			retention = 1
+		}
+		if retention > 24 {
+			retention = 24
+		}
+	} else {
+		c.String(http.StatusBadRequest, "Invalid unit")
+		return
 	}
+
 	duration, err := time.ParseDuration(fmt.Sprintf("%d%s", retention, unit))
 	if err != nil {
 		c.String(http.StatusBadRequest, "Couldn't parse duration")
