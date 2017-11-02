@@ -2,11 +2,18 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/gin-contrib/location"
 	"github.com/gin-gonic/gin"
 	"github.com/segmentio/ksuid"
 )
+
+var baseurl string
+
+func init() {
+	baseurl = os.Getenv("JUSTCURLIT_BASEURL")
+}
 
 // URLs
 func downloadURL(id ksuid.KSUID, c *gin.Context, path string) string {
@@ -25,6 +32,9 @@ func zipURL(id ksuid.KSUID, c *gin.Context, path string) string {
 	return fmt.Sprintf("%s/z/%s/%s", baseURL(c), id, path)
 }
 func baseURL(c *gin.Context) string {
+	if baseurl != "" {
+		return baseurl
+	}
 	url := location.Get(c)
 	return url.Scheme + "://" + url.Host
 }
